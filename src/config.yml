@@ -1,0 +1,73 @@
+################################
+######## Создание МЕНЮ #########
+################################
+# Доступные function:
+# close - закрытие инвентаря
+# safe - телепортация в режиме safe
+# far - телепортация в режиме far
+# player - телепортация в режиме player
+# base - телепортация в режиме base
+menu:
+  title: "&0&nРТП:"
+  size: 54
+
+  items:
+    glass1:
+      display_name: "&0 "
+      description: [ ]
+      material: BLACK_STAINED_GLASS_PANE
+      slots:
+        - 0
+        - 8
+        - 45
+        - 53
+
+    back:
+      display_name: "&cПерейти назад "
+      description: [ ]
+      material: ARROW
+      slots:
+        - 49
+      function: close
+      action: menu
+
+    safe:
+      display_name: "&aБезопасный РТП"
+      description:
+        - "&7Телепортация в безопасное место."
+        - "&7Радиус &60-2500 блоков"
+      material: EMERALD
+      slots:
+        - 20
+      function: safe
+
+    far:
+      display_name: "&bДальний РТП"
+      description:
+        - "&7Телепортация на большие расстояния."
+        - "&7Радиус &62000-10000 блоков"
+      material: DIAMOND
+      slots:
+        - 22
+      function: far
+
+    player:
+      display_name: "&eИгрок РТП"
+      description:
+        - "&7Телепортация вблизи случайного игрока."
+        - "&7Рискованно, но интересно!"
+        - "&7Радиус &650-120 блоков от игрока"
+      material: PLAYER_HEAD
+      slots:
+        - 24
+      function: player
+
+    base:
+      display_name: "&6База РТП"
+      description:
+        - "&7Телепортация рядом с базой."
+        - "&7Радиус &650-150 блоков от региона"
+      material: GOLD_INGOT
+      slots:
+        - 40
+      function: base
