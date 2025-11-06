@@ -55,7 +55,7 @@ public class GUIListener implements Listener {
         if (items == null) return;
         ConfigurationSection section = items.getConfigurationSection(itemKey);
         if (section == null) return;
-        String function = section.getString("function", "close");
+        String function = section.getString("function", "nothing");
 
         switch (function.toLowerCase()) {
             case "close":
@@ -69,7 +69,7 @@ public class GUIListener implements Listener {
                 teleportManager.requestTeleport(p, function.toLowerCase());
                 break;
             default:
-                p.sendMessage(TextUtil.colorize("&cНеизвестная функция: " + function));
+                break;
         }
     }
 }

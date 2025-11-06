@@ -269,7 +269,6 @@ public class TeleportManager {
                         int cd = section.getInt("cooldown-seconds", 0);
                         if (cd > 0 && !p2.hasPermission("enumrtp." + type + ".bypass")) cooldownManager.setCooldown(uuid, type, cd);
                     });
-                    return;
                 }
             }
         } catch (Throwable t) {
