@@ -1,0 +1,6 @@
+name: EnumRTP
+main: com.enumdev.enumrtp.Main
+description: Многофункциональный плагин рандомных телепортов
+author: Liebert
+api-version: 1.16
+version: 1.0
