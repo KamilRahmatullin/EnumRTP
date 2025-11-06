@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="EnumRTP">
+    <output-path>$PROJECT_DIR$/out/artifacts/EnumRTP</output-path>
+    <root id="archive" name="EnumRTP.jar">
+      <element id="module-output" name="EnumRTP" />
+    </root>
+  </artifact>
+</component>

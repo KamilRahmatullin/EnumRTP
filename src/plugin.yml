@@ -1,6 +1,17 @@
 name: EnumRTP
 main: com.enumdev.enumrtp.Main
-description: Многофункциональный плагин рандомных телепортов
-author: Liebert
-api-version: 1.16
 version: 1.0
+api-version: 1.16
+author: Liebert
+commands:
+  rtp:
+    description: Открыть меню RTP
+    usage: /rtp
+  rtpreload:
+    description: Перезагрузить конфигурацию EnumRTP
+    usage: /rtpreload
+    permission: enumrtp.reload
+permissions:
+  enumrtp.reload:
+    description: Разрешает перезагрузку конфигурации EnumRTP
+    default: op
