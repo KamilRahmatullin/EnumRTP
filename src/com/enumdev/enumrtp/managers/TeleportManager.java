@@ -122,6 +122,7 @@ public class TeleportManager {
                     int playersInSameWorld = 0;
                     for (Player pl : Bukkit.getOnlinePlayers()) {
                         if (!pl.getWorld().equals(playersWorld)) continue;
+                        if (pl.hasPermission("enumrtp.player.ignore")) continue;
                         playersInSameWorld++;
                         if (!pl.getUniqueId().equals(uuid)) others.add(pl);
                     }
