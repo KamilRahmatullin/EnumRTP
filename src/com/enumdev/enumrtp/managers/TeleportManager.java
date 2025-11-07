@@ -91,8 +91,24 @@ public class TeleportManager {
         try {
             switch (type.toLowerCase()) {
                 case "player": {
-                    Collection<? extends Player> online = Bukkit.getOnlinePlayers();
-                    if (online.size() < section.getInt("min-online", 2)) {
+                    Player executor = Bukkit.getPlayer(uuid);
+                    String defaultWorldName = cfg.getConfig().getString("settings.default-world", "world");
+                    List<String> disabledWorlds = cfg.getConfig().getStringList("settings.disabled-worlds");
+
+                    String searchWorldName;
+                    if (executor != null) {
+                        World execWorld = executor.getWorld();
+                        if (execWorld != null && disabledWorlds.contains(execWorld.getName())) {
+                            searchWorldName = defaultWorldName;
+                        } else {
+                            searchWorldName = execWorld != null ? execWorld.getName() : defaultWorldName;
+                        }
+                    } else {
+                        searchWorldName = world != null ? world.getName() : defaultWorldName;
+                    }
+
+                    World playersWorld = Bukkit.getWorld(searchWorldName);
+                    if (playersWorld == null) {
                         Bukkit.getScheduler().runTask(plugin, () -> {
                             Player p = Bukkit.getPlayer(uuid);
                             if (p != null)
@@ -100,8 +116,25 @@ public class TeleportManager {
                         });
                         return;
                     }
+
+                    int minOnlineNeeded = section.getInt("min-online", 2);
                     List<Player> others = new ArrayList<>();
-                    for (Player pl : online) if (!pl.getUniqueId().equals(uuid)) others.add(pl);
+                    int playersInSameWorld = 0;
+                    for (Player pl : Bukkit.getOnlinePlayers()) {
+                        if (!pl.getWorld().equals(playersWorld)) continue;
+                        playersInSameWorld++;
+                        if (!pl.getUniqueId().equals(uuid)) others.add(pl);
+                    }
+
+                    if (playersInSameWorld < minOnlineNeeded) {
+                        Bukkit.getScheduler().runTask(plugin, () -> {
+                            Player p = Bukkit.getPlayer(uuid);
+                            if (p != null)
+                                p.sendMessage(TextUtil.parsePlaceholders(p, section.getString("messages.no_locations")));
+                        });
+                        return;
+                    }
+
                     if (others.isEmpty()) {
                         Bukkit.getScheduler().runTask(plugin, () -> {
                             Player p = Bukkit.getPlayer(uuid);
@@ -110,10 +143,12 @@ public class TeleportManager {
                         });
                         return;
                     }
+
                     Player target = others.get(rnd.nextInt(others.size()));
                     World targetWorld = target.getWorld();
                     int tmin = section.getInt("min-radius", 50);
                     int tmax = section.getInt("max-radius", 120);
+
                     for (int i = 0; i < tries; i++) {
                         int dx = ThreadLocalRandom.current().nextInt(tmin, tmax + 1) * (ThreadLocalRandom.current().nextBoolean() ? 1 : -1);
                         int dz = ThreadLocalRandom.current().nextInt(tmin, tmax + 1) * (ThreadLocalRandom.current().nextBoolean() ? 1 : -1);
@@ -137,6 +172,7 @@ public class TeleportManager {
                             break;
                         }
                     }
+
                     if (found == null) {
                         Bukkit.getScheduler().runTask(plugin, () -> {
                             Player p = Bukkit.getPlayer(uuid);
@@ -145,6 +181,7 @@ public class TeleportManager {
                         });
                         return;
                     }
+
                     Location finalFound = found;
                     String targetName = target.getName();
                     Bukkit.getScheduler().runTask(plugin, () -> {
@@ -164,6 +201,7 @@ public class TeleportManager {
                     });
                     return;
                 }
+
                 case "base": {
                     ConfigurationSection regions = cfg.getConfig().getConfigurationSection("regions");
                     if (regions == null || regions.getKeys(false).isEmpty()) {
