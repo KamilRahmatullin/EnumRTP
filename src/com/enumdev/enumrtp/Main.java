@@ -46,7 +46,7 @@ public final class Main extends JavaPlugin {
         this.placeholderHook = new PlaceholderHook(this);
 
         // Commands
-        RTPCommand rtpCommand = new RTPCommand(this, menuManager);
+        RTPCommand rtpCommand = new RTPCommand(this, menuManager, teleportManager);
         getCommand("rtp").setExecutor(rtpCommand);
         getCommand("rtpreload").setExecutor(new RTPReloadCommand(this));
 

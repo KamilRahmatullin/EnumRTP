@@ -1,6 +1,6 @@
 settings:
   default-world: world  # регион по умолчанию
-  disabled-worlds:  # в случае использование функций в данных мирах, игрок будет перемещён в мир по умолчанию
+  disabled-worlds: # в случае использование функций в данных мирах, игрок будет перемещён в мир по умолчанию
     - spawn
     - pvp
     - duels
@@ -14,6 +14,9 @@ main:
     allow-water-teleport: false  # Разрешить телепорт на жидкие блоки
     always-up: true  # Всегда телепортировать на максимальную высоту, иначе возможен телепорт в пещеры
     cooldown-seconds: 30  # Задержка на использование
+    aliases:  # добавление возможности использовать телепорт без открывания меню, например /rtp safe
+      - safe
+      - safety
     messages:
       successful_teleport: "&6РТП &8> &fВы успешно телепортированы на координаты &6{coordinates}&f."
       block_cooldown: "&6РТП &8> &fВы не можете телепортироваться ещё &6{seconds} сек."
@@ -29,6 +32,8 @@ main:
     allow-water-teleport: false  # Разрешить телепорт на жидкие блоки
     always-up: true  # Всегда телепортировать на максимальную высоту, иначе возможен телепорт в пещеры
     cooldown-seconds: 60  # Задержка на использование
+    aliases:
+      - far
     messages:
       successful_teleport: "&6РТП &8> &fВы успешно телепортированы на координаты &6{coordinates}&f."
       block_cooldown: "&6РТП &8> &fВы не можете телепортироваться ещё &6{seconds} сек."
@@ -46,6 +51,9 @@ main:
     warnings: true  # Включить оповещения, отправляемые игроку, возле которого идёт телепорт
     min-online: 2  # Минимальный онлайн на сервере для работы
     cooldown-seconds: 300  # Задержка на использование
+    aliases:
+      - player
+      - near
     messages:
       successful_teleport: "&6РТП &8> &fВы успешно телепортированы на координаты &6{coordinates}&f рядом с игроком &6{player}&f."
       block_cooldown: "&6РТП &8> &fВы не можете телепортироваться ещё &6{seconds} сек."
@@ -62,6 +70,8 @@ main:
     allow-water-teleport: true  # Разрешить телепорт на жидкие блоки
     always-up: true  # Всегда телепортировать на максимальную высоту, иначе возможен телепорт в пещеры
     cooldown-seconds: 600  # Задержка на использование
+    aliases:
+      - base
     messages:
       successful_teleport: "&6РТП &8> &fВы успешно телепортированы на координаты &6{coordinates}&f рядом с регионом &6{region_name}&f."
       block_cooldown: "&6РТП &8> &fВы не можете телепортироваться ещё &6{seconds} сек."
@@ -88,7 +98,7 @@ menu:
       material: BLACK_STAINED_GLASS_PANE
       model_data: 0
       enchantments:
-      - UNBREAKING;1
+        - UNBREAKING;1
       hide_enchantments: true
       hide_effects: true
       hide_attributes: true
