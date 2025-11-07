@@ -8,7 +8,7 @@ import java.util.*;
 
 public class ConfigManager {
     private final Main plugin;
-    private final FileConfiguration cfg;
+    private FileConfiguration cfg;
 
     public ConfigManager(Main plugin) {
         this.plugin = plugin;
@@ -120,6 +120,7 @@ public class ConfigManager {
 
     public void reload() {
         plugin.reloadConfig();
+        this.cfg = plugin.getConfig();
         cfg.options().copyDefaults(true);
         ensureDefaults();
         plugin.saveConfig();
