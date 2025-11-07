@@ -41,9 +41,7 @@ public class GUIListener implements Listener {
             ConfigurationSection items = cfg.getMenuItemsSection();
             if (items != null && items.isConfigurationSection("back")) {
                 String action = items.getConfigurationSection("back").getString("action", "menu");
-                if (action.equalsIgnoreCase("menu")) {
-                    p.performCommand("menu");
-                }
+                    p.performCommand(action);
             }
             return;
         }

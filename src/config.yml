@@ -86,6 +86,12 @@ menu:
       display_name: "&0 "
       description: [ ]
       material: BLACK_STAINED_GLASS_PANE
+      model_data: 0
+      enchantments:
+      - UNBREAKING;1
+      hide_enchantments: true
+      hide_effects: true
+      hide_attributes: true
       slots:
         - 0
         - 8
