@@ -203,29 +203,50 @@ public class TeleportManager {
                 }
 
                 case "base": {
-                    ConfigurationSection regions = cfg.getConfig().getConfigurationSection("regions");
-                    if (regions == null || regions.getKeys(false).isEmpty()) {
-                        Bukkit.getScheduler().runTask(plugin, () -> {
-                            Player p = Bukkit.getPlayer(uuid);
-                            if (p != null)
-                                p.sendMessage(TextUtil.parsePlaceholders(p, section.getString("messages.no_locations")));
-                        });
-                        return;
-                    }
+                    List<String> disabledWorlds = cfg.getConfig().getStringList("settings.disabled-worlds");
                     List<Location> centers = new ArrayList<>();
                     List<String> names = new ArrayList<>();
-                    for (String key : regions.getKeys(false)) {
-                        ConfigurationSection r = regions.getConfigurationSection(key);
-                        if (r == null) continue;
-                        String wname = r.getString("world", world.getName());
-                        World w = Bukkit.getWorld(wname);
-                        if (w == null) continue;
-                        double rx = r.getDouble("x");
-                        double ry = r.getDouble("y");
-                        double rz = r.getDouble("z");
-                        centers.add(new Location(w, rx, ry, rz));
-                        names.add(key);
+
+                    try {
+                        com.sk89q.worldguard.protection.regions.RegionContainer container =
+                                com.sk89q.worldguard.WorldGuard.getInstance().getPlatform().getRegionContainer();
+                        for (World w : Bukkit.getWorlds()) {
+                            if (disabledWorlds.contains(w.getName())) continue;
+                            com.sk89q.worldguard.protection.managers.RegionManager rm =
+                                    container.get(com.sk89q.worldedit.bukkit.BukkitAdapter.adapt(w));
+                            if (rm == null) continue;
+                            for (com.sk89q.worldguard.protection.regions.ProtectedRegion pr : rm.getRegions().values()) {
+                                com.sk89q.worldedit.math.BlockVector3 minVec = pr.getMinimumPoint();
+                                com.sk89q.worldedit.math.BlockVector3 maxVec = pr.getMaximumPoint();
+                                double cx = (minVec.getX() + maxVec.getX()) / 2.0;
+                                double cy = (minVec.getY() + maxVec.getY()) / 2.0;
+                                double cz = (minVec.getZ() + maxVec.getZ()) / 2.0;
+                                centers.add(new Location(w, cx, cy, cz));
+                                names.add(pr.getId());
+                            }
+                        }
+                    } catch (NoClassDefFoundError | Exception ignored) {
                     }
+
+                    if (centers.isEmpty()) {
+                        ConfigurationSection regions = cfg.getConfig().getConfigurationSection("regions");
+                        if (regions != null) {
+                            for (String key : regions.getKeys(false)) {
+                                ConfigurationSection r = regions.getConfigurationSection(key);
+                                if (r == null) continue;
+                                String wname = r.getString("world", world.getName());
+                                if (disabledWorlds.contains(wname)) continue;
+                                World w = Bukkit.getWorld(wname);
+                                if (w == null) continue;
+                                double rx = r.getDouble("x");
+                                double ry = r.getDouble("y");
+                                double rz = r.getDouble("z");
+                                centers.add(new Location(w, rx, ry, rz));
+                                names.add(key);
+                            }
+                        }
+                    }
+
                     if (centers.isEmpty()) {
                         Bukkit.getScheduler().runTask(plugin, () -> {
                             Player p = Bukkit.getPlayer(uuid);
@@ -234,10 +255,12 @@ public class TeleportManager {
                         });
                         return;
                     }
+
                     int idx = ThreadLocalRandom.current().nextInt(centers.size());
                     Location center = centers.get(idx);
                     String regionName = names.get(idx);
                     World rw = center.getWorld();
+
                     for (int i = 0; i < tries; i++) {
                         int dx = ThreadLocalRandom.current().nextInt(min, max + 1) * (ThreadLocalRandom.current().nextBoolean() ? 1 : -1);
                         int dz = ThreadLocalRandom.current().nextInt(min, max + 1) * (ThreadLocalRandom.current().nextBoolean() ? 1 : -1);
@@ -283,6 +306,7 @@ public class TeleportManager {
                     });
                     return;
                 }
+
                 case "safe":
                 case "far": {
                     int cx = 0;

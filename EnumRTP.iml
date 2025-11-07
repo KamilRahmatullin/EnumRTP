@@ -21,5 +21,6 @@
     <orderEntry type="library" name="spigot-1.16.5" level="project" />
     <orderEntry type="library" name="Vault" level="project" />
     <orderEntry type="library" name="PlaceholderAPI" level="project" />
+    <orderEntry type="library" name="FastAsyncWorldEdit" level="project" />
   </component>
 </module>
