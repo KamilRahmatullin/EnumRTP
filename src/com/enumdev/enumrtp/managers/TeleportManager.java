@@ -3,10 +3,7 @@ package com.enumdev.enumrtp.managers;
 import com.enumdev.enumrtp.Main;
 import com.enumdev.enumrtp.config.ConfigManager;
 import com.enumdev.enumrtp.utils.TextUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -194,7 +191,9 @@ public class TeleportManager {
                         msg = msg.replace("{coordinates}", coords).replace("{player}", targetName);
                         p.sendMessage(TextUtil.parsePlaceholders(p, msg));
                         if (section.getBoolean("warnings", true) && target.isOnline()) {
+                            String warningSound = section.getString("warning-sound", "BLOCK_BARREL_OPEN");
                             target.sendMessage(TextUtil.parsePlaceholders(target, section.getString("messages.warning")));
+                            target.playSound(target.getLocation(), Sound.valueOf(warningSound), 1.0f, 1.0f);
                         }
                         int cd = section.getInt("cooldown-seconds", 0);
                         if (cd > 0 && !p.hasPermission("enumrtp.player.bypass"))

@@ -92,6 +92,7 @@ public class ConfigManager {
         cfg.addDefault("main.player.allow-water-teleport", true);
         cfg.addDefault("main.player.always-up", true);
         cfg.addDefault("main.player.warnings", true);
+        cfg.addDefault("main.player.warning-sound", "BLOCK_BARREL_OPEN");
         cfg.addDefault("main.player.min_online", 2);
         cfg.addDefault("main.player.cooldown-seconds", 300);
         cfg.addDefault("main.player.messages.successful_teleport", "&6РТП &8> &fВы успешно телепортированы на координаты &6{coordinates}&f рядом с игроком &6{player}&f.");
