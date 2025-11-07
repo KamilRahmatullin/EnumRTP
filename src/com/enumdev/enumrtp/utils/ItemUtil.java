@@ -45,8 +45,6 @@ public class ItemUtil {
                 lore.add(TextUtil.colorize(l));
             meta.setLore(lore);
 
-            Bukkit.getLogger().info(dn);
-
             int modelData = section.getInt("model_data", -1);
             if (modelData != -1) {
                 meta.setCustomModelData(modelData);
