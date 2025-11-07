@@ -5,7 +5,6 @@ import com.enumdev.enumrtp.commands.RTPReloadCommand;
 import com.enumdev.enumrtp.config.ConfigManager;
 import com.enumdev.enumrtp.gui.MenuManager;
 import com.enumdev.enumrtp.listeners.GUIListener;
-import com.enumdev.enumrtp.listeners.PlayerQuitListener;
 import com.enumdev.enumrtp.managers.CooldownManager;
 import com.enumdev.enumrtp.managers.TeleportManager;
 import com.enumdev.enumrtp.utils.PlaceholderHook;
@@ -54,7 +53,7 @@ public final class Main extends JavaPlugin {
         // Listeners
         PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(new GUIListener(this, menuManager, teleportManager, cooldownManager), this);
-        pm.registerEvents(new PlayerQuitListener(cooldownManager), this);
+
 
         getLogger().log(Level.INFO, "EnumRTP enabled. Author: Liebert");
     }
