@@ -36,7 +36,6 @@ public class MenuManager {
             if (is == null) continue;
             for (int slot : item.getIntegerList("slots")) {
                 if (slot < 0 || slot >= size) continue;
-                // clone to avoid shared ItemMeta mutation
                 ItemStack clone = is.clone();
                 PDCUtils.setString(clone, "enumrtp_item", key);
                 if (key.equalsIgnoreCase("back")) PDCUtils.setString(clone, "enumrtp_back_button", "true");
