@@ -4,6 +4,7 @@ version: 1.1
 api-version: 1.16
 author: Liebert
 description: Плагин для управления телепортациями. Плагин создан студией EnumDev
+website: https://vk.com/enumdev
 commands:
   rtp:
     description: Открыть меню RTP
