@@ -3,6 +3,7 @@ main: com.enumdev.enumrtp.Main
 version: 1.0
 api-version: 1.16
 author: Liebert
+description: Плагин для управления телепортациями. Плагин создан студией EnumDev
 commands:
   rtp:
     description: Открыть меню RTP
