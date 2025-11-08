@@ -1,6 +1,6 @@
 name: EnumRTP
 main: com.enumdev.enumrtp.Main
-version: 1.0
+version: 1.1
 api-version: 1.16
 author: Liebert
 description: Плагин для управления телепортациями. Плагин создан студией EnumDev
